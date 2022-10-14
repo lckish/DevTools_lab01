@@ -1,22 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PowerCollections
 {
-    public class Stack<T>
+    public class Stack<T> : IEnumerable<T>
     {
         public int Capacity;//размер стека
         private T[] Items; // элементы стека
         private int count;  // количество элементов
+        //Размер стека
+        public int Count
+        {
+            get { return count; }
+        }
 
-        //конструктор
+        //Constructor
         public Stack(int size)
         {
             Items = new T[size];
             Capacity = size;
             count = 0;
         }
-
+        //Enumerator
         public IEnumerator<T> GetEnumerator()
         {
             for (int i = Count; i > 0; i--)
@@ -24,9 +30,10 @@ namespace PowerCollections
                 yield return Items[i - 1];
             }
         }
-
-
-
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         //Проверка на заполненость
         public bool IsEmpty
@@ -35,13 +42,9 @@ namespace PowerCollections
         }
         public bool IsFull
         {
-            get { return Items.Length == Capacity; }
+            get { return Count == Capacity; }
         }
-        //Размер стека
-        public int Count
-        {
-            get { return count; }
-        }
+
         //Добавление элемента
         internal void Push(T item)
         {

@@ -8,21 +8,35 @@ namespace PowerCollections.Tests
 {
     [TestClass]
     public class StackTests
-    {
+    {        
+        //Constructor test
         [TestMethod]
-        public void Enumerator()
+        public void TestConstructorStack()
         {
-            int[] arr = new int[] { 5, 2, 7 };
             Stack<int> stack = new Stack<int>(10);
-            foreach (int i in arr)
-                stack.Push(i);
-            var revArr = arr.Reverse().ToArray();
-            Assert.AreEqual(5, revArr[2]);
-            Assert.AreEqual(7, stack.Pop());
+            Assert.AreEqual(0, stack.Count);
+            Assert.AreEqual(10, stack.Capacity);
         }
 
+        //Enumerator Test
         [TestMethod]
-        public void TestPush()
+        public void Enumerator_ReturnInvertedStack()
+        {
+            Stack<int> stack = new Stack<int>(3);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            int[] Arr = new int[] { 3, 2, 1 };
+            int[] testArr = new int[3];
+            int i = 0;
+            foreach (int item in stack)
+                testArr[i++] = item;
+            CollectionAssert.AreEqual(Arr, testArr);
+        }
+
+        //Push tests
+        [TestMethod]
+        public void TestPush_IfStackNotIsFull()
         {
             Stack<string> stack = new Stack<string>(10);
             stack.Push("1");
@@ -32,7 +46,17 @@ namespace PowerCollections.Tests
         }
 
         [TestMethod]
-        public void TestPop()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestPushWithException_IfStackFull()
+        {
+            Stack<string> stack = new Stack<string>(1);
+            stack.Push("1");
+            stack.Push("2");
+        }
+
+        //Pop tests
+        [TestMethod]
+        public void TestPop_IfStackNotIsEmpty()
         {
             Stack<string> stack = new Stack<string>(10);
             string a = "1";
@@ -46,15 +70,16 @@ namespace PowerCollections.Tests
         }
 
         [TestMethod]
-        public void TestConstructorStack()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestPopWithException_StackIsEmpty()
         {
-            Stack<int> stack = new Stack<int>(10);
-            Assert.AreEqual(0, stack.Count);
-            Assert.AreEqual(10, stack.Capacity);
+            Stack<int> stack = new Stack<int>(1);
+            stack.Pop();
         }
 
+        //Top Tests
         [TestMethod]
-        public void TestTop()
+        public void TestTop_IfStackNotIsEmpty()
         {
             Stack<string> stack = new Stack<string>(10);
             stack.Push("1");
@@ -67,43 +92,71 @@ namespace PowerCollections.Tests
         }
 
         [TestMethod]
-        public void TestIsEmpty()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestTopWithException_StackIsEmpty()
+        {
+            Stack<int> stack = new Stack<int>(1);
+            stack.Top();
+        }
+
+        //IsEmpty Tests
+        [TestMethod]
+        public void TestIsEmpty_TrueWhenCreateNewStack()
         {
             Stack<string> stack = new Stack<string>(10);
             Assert.IsTrue(stack.IsEmpty);
         }
 
         [TestMethod]
-        public void TestIsFull()
+        public void TestIsEmpty_FalseAfterPush()
         {
-            Stack<string> stack = new Stack<string>(10);
-            for (int i = 0; i < stack.Capacity; i++)
-                stack.Push($"push {i++}");
+            Stack<int> stack = new Stack<int>(10);
+            stack.Push(1);
+            Assert.IsFalse(stack.IsEmpty);
+        }
+
+        [TestMethod]
+        public void TestIsEmpty_TrueAfterPop()
+        {
+            Stack<int> stack = new Stack<int>(3);
+            stack.Push(1);
+            stack.Pop();
+            Assert.IsTrue(stack.IsEmpty);
+        }
+
+
+        //IsFull tests
+        [TestMethod]
+        public void TestIsFull_TrueAfterFilligStack()
+        {
+            Stack<string> stack = new Stack<string>(1);
+            stack.Push("r");
             Assert.IsTrue(stack.IsFull);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void TestPushExceptionIndexOutOfRange()
+        public void TestIsFull_TrueWhenCreateNewStack()
         {
-            Stack<int> stack = new Stack<int>(0);
+            Stack<int> stack = new Stack<int>(10);
+            Assert.IsFalse(stack.IsFull);
+        }
+
+        [TestMethod]
+        public void TestIsFull_FalseAfterPop()
+        {
+            Stack<int> stack = new Stack<int>(2);
+            stack.Push(2);
             stack.Push(1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void TestTopExceptionIndexOutOfRange()
-        {
-            Stack<int> stack = new Stack<int>(1);
-            stack.Top();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void TestPopExceptionIndexOutOfRange()
-        {
-            Stack<int> stack = new Stack<int>(1);
             stack.Pop();
+            Assert.IsFalse(stack.IsFull);
+        }
+
+        //Exception
+        [TestMethod]
+        [ExpectedException(typeof(OverflowException))]
+        public void TestException_WhenCreateNewStackWithNegativeValue()
+        {
+            Stack<int> stack = new Stack<int>(-2);
         }
     }
 }
