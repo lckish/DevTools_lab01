@@ -1,8 +1,0 @@
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\bin\Debug\netstandard2.1\PowerCollections.deps.json
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\bin\Debug\netstandard2.1\PowerCollections.dll
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\bin\Debug\netstandard2.1\PowerCollections.pdb
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\obj\Debug\netstandard2.1\PowerCollections.csproj.AssemblyReference.cache
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\obj\Debug\netstandard2.1\PowerCollections.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\obj\Debug\netstandard2.1\PowerCollections.csproj.CoreCompileInputs.cache
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\obj\Debug\netstandard2.1\PowerCollections.dll
-C:\Users\webra\OneDrive\Рабочий стол\PowerCollections\PowerCollections\obj\Debug\netstandard2.1\PowerCollections.pdb
