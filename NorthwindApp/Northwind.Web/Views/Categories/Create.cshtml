@@ -10,21 +10,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="Create" data-tid="category-form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
+                <input asp-for="CategoryName" data-tid="category-name" class="form-control" />
                 <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <input asp-for="Description" data-tid="category-description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
-                <input asp-for="Picture" class="form-control" />
+                <input asp-for="Picture" data-tid="category-picture" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <br />

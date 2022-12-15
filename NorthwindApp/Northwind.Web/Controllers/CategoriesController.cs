@@ -16,8 +16,8 @@ namespace Northwind.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-              return View(await context
-                  .Categories
+            return View(await context
+                  .Categories.Include(c => c.Products)
                   .Select(c => c.ToViewModel())
                   .ToListAsync());
         }
@@ -29,7 +29,7 @@ namespace Northwind.Web.Controllers
                 return NotFound();
             }
 
-            var category = await context.Categories
+            var category = await context.Categories.Include(c => c.Products)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
@@ -112,7 +112,7 @@ namespace Northwind.Web.Controllers
                 return NotFound();
             }
 
-            var category = await context.Categories
+            var category = await context.Categories.Include(c => c.Products)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
@@ -131,18 +131,22 @@ namespace Northwind.Web.Controllers
                 return Problem("Entity set 'NorthwindContext.Categories'  is null.");
             }
             var category = await context.Categories.FindAsync(id);
+
             if (category != null)
             {
                 var haveProducts = context.Products.Where(p => p.Category == category).Any();
-                
-                if (haveProducts) 
+
+                if (haveProducts)
                 {
-                    ModelState.AddModelError("", "Нельзя удалять категории с привязанными товарами!");
+                    category.Products = await context.Products.Where(p => p.CategoryId == id).ToListAsync();
+
+                    ModelState.AddModelError("", "Нельзя удалять категории с привязанными товарами!\n" +
+                        $"Категория {category.CategoryName} имеет связанные продукты ({category.Products.Count})");
                     return View(category.ToViewModel());
                 }
                 context.Categories.Remove(category);
             }
-            
+
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -159,7 +163,7 @@ namespace Northwind.Web.Controllers
 
         private bool CategoryExists(int id)
         {
-          return context.Categories.Any(e => e.CategoryId == id);
+            return context.Categories.Any(e => e.CategoryId == id);
         }
     }
 }
