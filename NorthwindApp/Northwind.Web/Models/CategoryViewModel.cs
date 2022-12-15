@@ -17,9 +17,6 @@ namespace Northwind.Web.Models
         
         [Display(Name = "Изображение")]
         public IFormFile? Picture { get; set; }
-
-        [Display(Name = "Продукты")]
-        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 
     public static class CategoryViewModelExtensions 
@@ -31,7 +28,6 @@ namespace Northwind.Web.Models
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
                 Description = category.Description,
-                Products = category.Products,
                 Picture = null,
             };
         }
@@ -43,7 +39,6 @@ namespace Northwind.Web.Models
                 CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,
                 Description = model.Description,
-                Products = model.Products,
                 Picture = null
             };
 

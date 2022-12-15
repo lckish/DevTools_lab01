@@ -9,51 +9,28 @@
 <div>
     <h4>Категория "@Model.CategoryName"</h4>
     <hr />
-    <dl data-tid="category-card" class="row">
-        <dt class="col-sm-2">
+    <dl class="row">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CategoryName)
         </dt>
-        <dd data-tid="category-name" class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CategoryName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd data-tid="category-description" class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
-        <dd data-tid="category-picture" class="col-sm-10">
+        <dd class = "col-sm-10">
             <img src="@Url.Action("Image", new { Id = Model.CategoryId })" width="100" />
         </dd>
     </dl>
 </div>
-
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.CategoryId">Редактировать</a> |
     <a asp-action="Index">Вернуться к списку</a>
-</div>
-
-<div data-tid="category-product-list">
-    @{
-        if (Model != null)
-        {
-            if (Model.Products.Count != 0)
-            {
-                <p>Продукты (@Model.Products.Count()):</p>
-                foreach (var product in Model.Products)
-                {
-                    <p data-tid="product-name">
-                        @Html.DisplayFor(productName => product.ProductName)
-                    </p>
-                }
-            }
-            else
-            {
-                <p>Нет продуктов</p>
-            }
-        }
-    }
 </div>
