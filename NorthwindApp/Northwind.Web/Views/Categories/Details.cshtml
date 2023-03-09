@@ -34,3 +34,20 @@
     <a asp-action="Edit" asp-route-id="@Model?.CategoryId">Редактировать</a> |
     <a asp-action="Index">Вернуться к списку</a>
 </div>
+
+@{
+    if (Model.Products.Count != 0)
+    {
+        <p class="fs-4">Продукты @Model.Products.Count():</p>
+        foreach (var product in Model.Products)
+        {
+            <p class="fs-5">
+                @Html.DisplayFor(productName => product.ProductName)
+            </p>
+        }
+    }
+    else
+    {
+        <p class="fs-4 fw-bold">Продуктов не найдено</p>
+    }
+}

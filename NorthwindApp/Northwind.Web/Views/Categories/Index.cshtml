@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Picture)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,24 @@
                 </td>
                 <td data-tid="category-picture">
                     <img src="@Url.Action("Image", new { Id = item.CategoryId })" width="100" />
+                </td>
+                <td data-tid="category-products">
+                    @{
+                        if (item.Products.Count != 0)
+                        {
+                            <p class="fs-5">Всего продуктов: @item.Products.Count()</p>
+                            foreach (var product in item.Products.Take(3))
+                            {
+                                <p class="fs-6">
+                                    @Html.DisplayFor(productName => product.ProductName)
+                                </p>
+                            }
+                        }
+                        else
+                        {
+                            <p class="fs-5 fw-bold">Продуктов не найдено</p>
+                        }
+                    }
                 </td>
                 <td data-tid="category-row-actions">
                     <a asp-action="Edit" asp-route-id="@item.CategoryId">Редактировать</a><br />
