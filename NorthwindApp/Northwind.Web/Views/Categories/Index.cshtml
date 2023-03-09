@@ -47,7 +47,7 @@
                             <p class="fs-5">Всего продуктов: @item.Products.Count()</p>
                             foreach (var product in item.Products.Take(3))
                             {
-                                <p class="fs-6">
+                                <p class="fs-6" data-tid="product-name">
                                     @Html.DisplayFor(productName => product.ProductName)
                                 </p>
                             }

@@ -25,7 +25,7 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10" data-tid="category-picture">
             <img src="@Url.Action("Image", new { Id = Model.CategoryId })" width="100" />
         </dd>
     </dl>
@@ -41,7 +41,7 @@
         <p class="fs-4">Продукты @Model.Products.Count():</p>
         foreach (var product in Model.Products)
         {
-            <p class="fs-5">
+            <p class="fs-5"data-tid="product-name">
                 @Html.DisplayFor(productName => product.ProductName)
             </p>
         }
