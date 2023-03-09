@@ -355,6 +355,9 @@ namespace Northwind.Web.Tests
             context.Categories.First().Should().BeEquivalentTo(category,
                 options => options
                 .Excluding(c => c.Products));
+
+            var error = GetResultError;
+            error.Should().NotBeNull();
         }
 
         [TestMethod]
