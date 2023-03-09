@@ -17,7 +17,7 @@ namespace Northwind.Web.Controllers
         public async Task<IActionResult> Index()
         {
               return View(await context
-                  .Categories
+                  .Categories.Include(c => c.Products)
                   .Select(c => c.ToViewModel())
                   .ToListAsync());
         }
@@ -29,7 +29,7 @@ namespace Northwind.Web.Controllers
                 return NotFound();
             }
 
-            var category = await context.Categories
+            var category = await context.Categories.Include(c => c.Products)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
@@ -112,7 +112,7 @@ namespace Northwind.Web.Controllers
                 return NotFound();
             }
 
-            var category = await context.Categories
+            var category = await context.Categories.Include(c => c.Products)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
