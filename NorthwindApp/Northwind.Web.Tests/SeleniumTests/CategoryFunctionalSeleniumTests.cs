@@ -67,6 +67,130 @@ namespace Northwind.Web.Tests.SeleniumTests
             categoriesList.Categories.Count.Should().Be(currentCategoryCount + 1);
             newCategory.Should().BeEquivalentTo(categoryForAdd);
         }
+        [Test]
+        public void Registration()
+        {
+            webDriver.Navigate().GoToUrl("http://localhost:5000/");
+            IPageObjectFactory pageFactory = new PageObjectFactory();
+
+            var helper = new IdentityTestHelper();
+            helper.DeleteAllUsers();
+
+            var mainPage = pageFactory.Create<MainPage>(webDriver);
+
+            var registerPage = mainPage.GoToRegistration();
+
+            var userForReg = new
+            {
+                Name = helper.Email,
+                Password = helper.Password,
+                ConfirmPassword = helper.Password,
+            };
+
+            registerPage.Email = userForReg.Name;
+            registerPage.Password = userForReg.Password;
+            registerPage.ConfirmPassword = userForReg.ConfirmPassword;
+
+            mainPage = registerPage.RegisterAndGoToMainPage();
+
+            var exitText = mainPage.ExitText;
+            exitText.Should().Be("Выйти");
+
+            var profilePage = mainPage.GoToProfile();
+            var userName = profilePage.UserName;
+
+
+            userName.Should().Be($"Привествуем {helper.Email}!");
+        }
+        [Test]
+        public void Login()
+        {
+            webDriver.Navigate().GoToUrl("http://localhost:5000/");
+            IPageObjectFactory pageFactory = new PageObjectFactory();
+
+            var mainPage = pageFactory.Create<MainPage>(webDriver);
+
+            var helper = new IdentityTestHelper();
+            helper.DeleteAllUsers();
+            helper.AddUser(helper.Email, helper.Password);
+
+            var loginPage = mainPage.GoToLogin();
+            loginPage.Email = helper.Email;
+            loginPage.Password = helper.Password;
+
+            mainPage = loginPage.LoginAndGoToMainPage();
+
+            var exitText = mainPage.ExitText;
+            exitText.Should().Be("Выйти");
+
+            var profilePage = mainPage.GoToProfile();
+            var userName = profilePage.UserName;
+
+
+            userName.Should().Be($"Привествуем {helper.Email}!");
+        }
+        [Test]
+        public void LogOut()
+        {
+            webDriver.Navigate().GoToUrl("http://localhost:5000/");
+            IPageObjectFactory pageFactory = new PageObjectFactory();
+
+            var mainPage = pageFactory.Create<MainPage>(webDriver);
+
+            var helper = new IdentityTestHelper();
+            helper.DeleteAllUsers();
+            helper.AddUser(helper.Email, helper.Password);
+
+            var loginPage = mainPage.GoToLogin();
+            loginPage.Email = helper.Email;
+            loginPage.Password = helper.Password;
+
+            mainPage = loginPage.LoginAndGoToMainPage();
+            mainPage = mainPage.LogOut();
+
+            var enterText = mainPage.EnterText;
+            enterText.Should().Be("Войти");
+
+            var registerText = mainPage.RegisterText;
+            registerText.Should().Be("Зарегистрироваться");
+        }
+
+        [Test]
+        public void EditProfile()
+        {
+            webDriver.Navigate().GoToUrl("http://localhost:5000/");
+            IPageObjectFactory pageFactory = new PageObjectFactory();
+
+            var mainPage = pageFactory.Create<MainPage>(webDriver);
+
+            var helper = new IdentityTestHelper();
+            helper.DeleteAllUsers();
+            helper.AddUser(helper.Email, helper.Password);
+
+            var loginPage = mainPage.GoToLogin();
+            loginPage.Email = helper.Email;
+            loginPage.Password = helper.Password;
+
+            mainPage = loginPage.LoginAndGoToMainPage();
+
+            var profilePage = mainPage.GoToProfile();
+
+            profilePage.ProfileTab();
+            profilePage.PhoneNumber = helper.PhoneNumber;
+            profilePage.SavePhoneNumber();
+            var phoneAlert = profilePage.PhoneChangeSuccessfullAlert();
+
+            phoneAlert.Text.Should().BeEquivalentTo("Your profile has been updated");
+
+            profilePage.ChangePasswordTab();
+            profilePage.OldPassword = helper.Password;
+            profilePage.NewPassword = helper.NewPassword;
+            profilePage.ConfirmPassword = helper.NewPassword!;
+            profilePage.UpdatePassword();
+            var passwordAlert = profilePage.PasswordUpdateSuccesfulAlert();
+
+            passwordAlert.Text.Should().BeEquivalentTo("Your password has been changed.");
+        }
     }
 }
 
