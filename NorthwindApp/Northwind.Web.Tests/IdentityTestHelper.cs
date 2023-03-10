@@ -8,6 +8,10 @@ namespace Northwind.Web.Tests
     public class IdentityTestHelper
     {
         private readonly UserManager<IdentityUser> userManager;
+        public readonly string Email = "UnrealEmail@mail.ru";
+        public readonly string Password = "unrealPassword10$!";
+        public readonly string NewPassword = "RealpassWORD23&^%";
+        public readonly string PhoneNumber = "89127895321";
 
         public IdentityTestHelper(string? connectionString = null)
         {
