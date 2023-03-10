@@ -5,7 +5,7 @@ using SeleniumExtras.PageObjects;
 
 namespace Northwind.Web.Tests.SeleniumTests.Pages
 {
-    internal class Registration : HtmlPage
+    public class Registration : HtmlPage
     {
         [FindsBy(How = How.Id, Using = "Input_Email")]
         private HtmlInput email;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Web.Tests.SeleniumTests.Pages
 {
-    internal class Login : HtmlPage
+    public class Login : HtmlPage
     {
         [FindsBy(How = How.Id, Using = "Input_Email")]
         private HtmlInput email;
